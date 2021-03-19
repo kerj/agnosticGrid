@@ -9,7 +9,6 @@ export const columnDefs = [
     headerName: 'Model',
     field: 'model',
     cellRenderer: 'autoComplete',
-
   },
   {
     headerName: 'Price',

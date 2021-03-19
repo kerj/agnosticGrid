@@ -14,7 +14,7 @@ const App = () => {
     const makeArray = ["Toyota", "Ford", "Porsche", 'Trek']
     const modelOptions = {
         'Toyota': ["Rav4"],
-        'Ford': ["Mustang"],
+        'Ford': ["Mustang", 'GT', 'F150'],
         'Porsche': ["911 Turbo"],
         'Trek': ["RSL Emonda H1"],
     }
@@ -48,10 +48,11 @@ const App = () => {
         base: Select,
     };
 
+    // props from the cell is params
     const getOptions = useDynamicCallback((params: any) => {
-        const test = params?.node.data
-        const test2 = params.context.model[test.make] ? params.context.model[test.make] : []
-        return test2;
+        const data = params?.node.data
+        const optionsFromContext = params.context.model[data.make] ? params.context.model[data.make] : []
+        return optionsFromContext;
     })
     //typescript complains about gridApi being possibly null? 
     const handleAddRow = async (addIndex: any) => {
@@ -73,10 +74,10 @@ const App = () => {
         // prints all current rowData in grid to console
         console.log(rowDataRaw);
     }
+
     const onGridReady = (params: any) => {
         setGridApi(params.api);
     }
-
 
     return (
         <div className="ag-theme-alpine" style={{ height: 400, width: 600 }}>
