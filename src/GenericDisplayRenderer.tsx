@@ -1,15 +1,15 @@
-import React from 'react'
 import { Typography } from '@material-ui/core';
+import { ReactNode } from 'react';
 
 interface GenericDisplayRendererProps {
-  displayValue: string;
+  value: ReactNode;
+  props: Record<string, any>;
 }
 
-export const GenericDisplayRenderer = ({ displayValue }: GenericDisplayRendererProps) => {
-
+export const GenericDisplayRenderer = (props: GenericDisplayRendererProps) => {
   return (
     <Typography>
-      { displayValue }
+      { props.value }
     </Typography>
   )
 }

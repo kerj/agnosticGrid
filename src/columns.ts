@@ -23,22 +23,22 @@ export const columnGrouping = [
 	{
     headerName: 'Make',
     field: 'make',
-    cellRenderer: 'GenericDisplayRenderer',
+    cellRenderer: 'base',
   },
   {
     headerName: 'Model',
     field: 'model',
-    cellRenderer: 'GenericDisplayRenderer',
+    cellRenderer: 'base',
   },
   {
     headerName: 'Price',
     field: 'price',
-		cellRenderer: 'GenericDisplayRenderer',
+		cellRenderer: 'base',
   },
 	// {
 	// 	headerName: 'Type',
 	// 	field: 'type',
-	// 	cellRenderer: 'GenericDisplayRenderer',
+	// 	cellRenderer: 'base',
 	// },
 	{
 		headerName: 'Type/Power Source',
@@ -48,12 +48,12 @@ export const columnGrouping = [
 			{
 				field: 'type',
 				colId: 'type',
-				cellRenderer: 'GenericDisplayRenderer',
+				cellRenderer: 'base',
 			},
 			{
 				field: 'power',
 				colId: 'power',
-				cellRenderer: 'GenericDisplayRenderer',
+				cellRenderer: 'base',
 			},
 		]
 	},

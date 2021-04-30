@@ -26,7 +26,7 @@ export const ColumnGroupingExample = () => {
       console.log(selectedColIds);
       gridUtils.redrawRows();
     }
-  }, [selectedColIds, setSelectedColIds])
+  }, [selectedColIds])
 
   React.useEffect(() => {
     console.log(rowData);
@@ -87,14 +87,12 @@ export const ColumnGroupingExample = () => {
         rowData={rowData}
         onCellFocused={(params: any): void => {
           if (params?.column) {
-            console.log('setting, ', params?.column?.colId)
             setSelectedColIds(params?.column?.colId)
           }
         }
         }
         defaultColDef={{
           cellStyle: (params: any): any => {
-              console.log(params.colDef.colId, selectedColIds)
               if (params.colDef.colId === selectedColIds){
                 return {'background-color': 'blue'}
               }
