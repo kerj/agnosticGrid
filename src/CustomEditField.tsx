@@ -2,9 +2,6 @@ import React from 'react';
 import { TextField, Select, MenuItem } from '@material-ui/core'
 import { Autocomplete } from '@material-ui/lab';
 
-
-
-
 export default React.forwardRef((props: any, ref: any) => {
   const inputRef = React.useRef<any>();
   const [value, setValue] = React.useState('');
