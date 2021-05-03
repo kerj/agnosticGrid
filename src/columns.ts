@@ -1,3 +1,6 @@
+import { ColDef, ColGroupDef, GridOptions } from "@ag-grid-community/core"
+import { AbstractColDef } from "ag-grid-community"
+
 
 export const columnDefs = [
   {
@@ -19,7 +22,9 @@ export const columnDefs = [
   },
 ]
 
-export const columnGrouping = [ 
+export type DefinedColDefinitions = GridOptions["columnDefs"];
+
+export const columnGrouping: DefinedColDefinitions = [ 
 	{
     headerName: 'Make',
 		enableRowGroup: true,

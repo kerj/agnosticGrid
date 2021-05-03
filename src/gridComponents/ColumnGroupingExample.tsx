@@ -2,14 +2,14 @@ import React from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { Link } from '@material-ui/core';
 import { GenericDisplayRenderer } from '../GenericDisplayRenderer';
-import { columnGrouping } from '../columns';
+import { columnGrouping, DefinedColDefinitions } from '../columns';
 
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import { Column } from 'ag-grid-community';
 import { AllModules } from '@ag-grid-enterprise/all-modules';
-import { GetMainMenuItems, GetMainMenuItemsParams } from 'ag-grid-community/dist/lib/entities/gridOptions';
 import { MenuItemDef } from 'ag-grid-community/dist/lib/entities/gridOptions';
+import { ColDef } from "@ag-grid-community/core"
 
 
 
@@ -48,6 +48,7 @@ export const ColumnGroupingExample = () => {
     readonly redrawRows: () => void;
     readonly getSelectedNodes: () => void;
     readonly getColumn: (arg: string) => Column;
+    readonly setColumnDefs: (arg: DefinedColDefinitions) => void
   }
   // setGridUtils should be passed to the component that has the full grid api
   // set the methods you need as shown so the parent can control the grid
@@ -62,18 +63,22 @@ export const ColumnGroupingExample = () => {
       redrawRows: (): void => grid.redrawRows(),
       getSelectedNodes: (): void => grid.getSelectedNodes(),
       getColumn: (id: string): Column => colApi.getColumn(id),
+      setColumnDefs: (arg: DefinedColDefinitions): void => colApi.setColumnDefs(arg)
     })
   }
 
-  const getMainMenuItems = (params: GetMainMenuItemsParams): MenuItemDef[] => {
-    switch (params.column.getId()) {
+  const getMainMenuItems = (colId: string): MenuItemDef[] => {
+    // // get column if needed
+    // const column = gridUtils ? gridUtils.getColumn(colId) : null;
+    // console.log(column);
+
+    switch (colId) {
       case 'make':
-      console.log(params);
-      
        const menuItem: MenuItemDef = {
-          name: 'AG Grid Is Great',
+          name: 'Create Column Group',
           disabled: false,
           action: function () {
+            
             console.log('AG Grid is great was selected');
           },
         };
@@ -116,8 +121,12 @@ export const ColumnGroupingExample = () => {
           //   }
           // },
         }}
-        columnDefs={columnGrouping}
-        getMainMenuItems={ getMainMenuItems }
+        columnDefs={columnGrouping as any[]}
+        getMainMenuItems={ (params) => {
+          const colId = params.column.getId()
+          return getMainMenuItems(colId); 
+        } 
+      }
         // to use custom components (one way)
         frameworkComponents={frameworkComponents}
         getRowNodeId={data => data.id}
