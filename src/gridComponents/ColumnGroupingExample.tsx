@@ -7,6 +7,10 @@ import { columnGrouping } from '../columns';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 import { Column } from 'ag-grid-community';
+import { AllModules } from '@ag-grid-enterprise/all-modules';
+import { GetMainMenuItems, GetMainMenuItemsParams } from 'ag-grid-community/dist/lib/entities/gridOptions';
+import { MenuItemDef } from 'ag-grid-community/dist/lib/entities/gridOptions';
+
 
 
 export const ColumnGroupingExample = () => {
@@ -39,12 +43,6 @@ export const ColumnGroupingExample = () => {
     base: GenericDisplayRenderer,
   };
 
-  const getOptions = (params: any) => {
-    const data = params?.node.data
-    const optionsFromContext = params.context.model[data.make] ? params.context.model[data.make] : []
-    return optionsFromContext;
-  }
-
   // all methods that require grid api should be set in here
   interface GridUtils {
     readonly redrawRows: () => void;
@@ -67,9 +65,33 @@ export const ColumnGroupingExample = () => {
     })
   }
 
+  const getMainMenuItems = (params: GetMainMenuItemsParams): MenuItemDef[] => {
+    switch (params.column.getId()) {
+      case 'make':
+      console.log(params);
+      
+       const menuItem: MenuItemDef = {
+          name: 'AG Grid Is Great',
+          disabled: false,
+          action: function () {
+            console.log('AG Grid is great was selected');
+          },
+        };
+
+        return [menuItem];
+
+     default: 
+        return [{ name: 'Hi' }, { name: 'hello' }];
+    }
+    // get the grid to create a group and add this to it
+ 
+  } 
+
   return (
     <div className="ag-theme-alpine" style={{ height: 400, width: 825 }}>
       <AgGridReact
+        modules={AllModules as any}
+
         onGridReady={onGridReady}
         rowData={rowData}
         onSelectionChanged={ (params): void => {
@@ -85,22 +107,20 @@ export const ColumnGroupingExample = () => {
         }
         rowSelection='single'
         defaultColDef={{
-          cellStyle: (params: any): any => {
-            if (params.column.colId !== undefined) {
-              console.log(params);
-              if (params.column.colId === selectedColIds){
-                return {'background-color': 'blue'}
-              }
-            }
-          },
+          // cellStyle: (params: any): any => {
+          //   if (params.column.colId !== undefined) {
+          //     console.log(params);
+          //     if (params.column.colId === selectedColIds){
+          //       return {'background-color': 'blue'}
+          //     }
+          //   }
+          // },
         }}
         columnDefs={columnGrouping}
+        getMainMenuItems={ getMainMenuItems }
         // to use custom components (one way)
         frameworkComponents={frameworkComponents}
         getRowNodeId={data => data.id}
-        // dont use context this way, use the setGridUtils option instead
-        // reactful thinking- data should flow one way 
-        context={{ updateOptions: getOptions }}
       >
       </AgGridReact>
     </div>

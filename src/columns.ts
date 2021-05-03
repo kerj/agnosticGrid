@@ -22,6 +22,7 @@ export const columnDefs = [
 export const columnGrouping = [ 
 	{
     headerName: 'Make',
+		enableRowGroup: true,
     field: 'make',
     cellRenderer: 'base',
   },
@@ -48,6 +49,7 @@ export const columnGrouping = [
 			{
 				field: 'type',
 				colId: 'type',
+				enableRowGroup: true,
 				cellRenderer: 'base',
 			},
 			{
